@@ -3,5 +3,37 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "ngx-gundb": {
+      "projectType": "library",
+      "root": "projects/ngx-gundb",
+      "sourceRoot": "projects/ngx-gundb/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-gundb/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-gundb/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-gundb/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-gundb/src/test.ts",
+            "tsConfig": "projects/ngx-gundb/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-gundb/karma.conf.js"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ngx-gundb"
 }

@@ -25,3 +25,19 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Local test
+
+to test the library in the local environment, run the following codes:
+
+In the workspace folder:
+
+```sh
+ng build ngx-gundb && cd dist && cd ngx-gundb && npm link && cd ../..
+```
+
+In the project folder:
+
+```sh
+npm link ngx-gundb && ng s
+```
