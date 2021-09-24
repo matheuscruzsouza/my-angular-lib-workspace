@@ -1,5 +1,5 @@
 {
-  "name": "my-angular-lib-workspace",
+  "name": "ngx-gundb",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^9.1.11",
@@ -10,7 +10,7 @@
     "tslib": "^2.3.0"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/matheuscruzsouza/"
+    "@matheuscruzsouza:registry": "https://npm.pkg.github.com/matheuscruzsouza/"
   },
   "repository": {
     "type": "git",
