@@ -10,11 +10,11 @@
     "tslib": "^2.3.0"
   },
   "publishConfig": {
+    "name": "ngx-gundb",
     "registry": "https://npm.pkg.github.com/matheuscruzsouza/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/matheuscruzsouza/my-angular-lib-workspace.git",
-    "directory": "projects/ngx-gundb"
+    "url": "git+https://github.com/matheuscruzsouza/my-angular-lib-workspace.git"
   }
 }

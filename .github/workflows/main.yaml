@@ -15,6 +15,6 @@ jobs:
           scope: "@matheuscruzsouza"
       - name: Publish to GitHub Packages
         run: |
-          npm publish
+          npm publish projects/ngx-gundb
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN }}
