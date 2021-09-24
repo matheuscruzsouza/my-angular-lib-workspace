@@ -15,6 +15,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/matheuscruzsouza/my-angular-lib-workspace.git",
-    "directory": "packages/ngx-gundb"
+    "directory": "projects/ngx-gundb"
   }
 }
