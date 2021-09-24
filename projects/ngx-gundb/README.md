@@ -1,24 +1,37 @@
 # NgxGundb
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
+This library encapsule the .
 
-## Code scaffolding
+## Local test
 
-Run `ng generate component component-name --project ngx-gundb` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngx-gundb`.
-> Note: Don't forget to add `--project ngx-gundb` or else it will be added to the default project in your `angular.json` file. 
+to test the library in the local environment, run the following codes:
 
-## Build
+In the workspace folder:
 
-Run `ng build ngx-gundb` to build the project. The build artifacts will be stored in the `dist/` directory.
+```sh
+ng build ngx-gundb && cd dist/ngx-gundb && npm link && cd ../..
+```
 
-## Publishing
+In the test project folder:
 
-After building your library with `ng build ngx-gundb`, go to the dist folder `cd dist/ngx-gundb` and run `npm publish`.
+```sh
+npm link ngx-gundb && ng s
+```
 
-## Running unit tests
+## Links
 
-Run `ng test ngx-gundb` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Repository: [https://github.com/matheuscruzsouza/my-angular-lib-workspace](https://github.com/matheuscruzsouza/my-angular-lib-workspace)
+  - In case of sensitive bugs like security vulnerabilities, please contact
+    matheuscruzsouza@gmail.com directly instead of using issue tracker. We value your effort
+    to improve the security and privacy of this project!
 
-## Further help
+## Versioning
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+0.0.1.0
+
+## Authors
+
+- **Matheus Cruz de Souza**: [@matheuscruzsouza - Github](https://github.com/matheuscruzsouza)
+
+Please follow github and join us!
+Thanks to visiting me and good coding!

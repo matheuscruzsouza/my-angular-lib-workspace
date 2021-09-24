@@ -9,7 +9,11 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "devDependencies": {
-    "@types/gun": "^0.9.3"
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/matheuscruzsouza/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matheuscruzsouza/ngx-gundb.git"
   }
 }
