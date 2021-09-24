@@ -35,5 +35,13 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "ng-packagr": "^12.1.1",
     "typescript": "~4.3.5"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/matheuscruzsouza/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matheuscruzsouza/my-angular-lib-workspace.git",
+    "directory": "projects/ngx-gundb"
   }
 }
