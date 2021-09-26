@@ -20,10 +20,8 @@ npm link <library name> && ng s
 
 ## To publish
 
-> Go to the project folder and run:
-
 ```sh
-npm publish --access public
+cd dist/<library name> && npm publish --access public && cd ../..
 ```
 
 ## Links
