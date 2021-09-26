@@ -18,6 +18,14 @@ In the test project folder:
 npm link <library name> && ng s
 ```
 
+## To publish
+
+> Go to the project folder and run:
+
+```sh
+npm publish --access public
+```
+
 ## Links
 
 - Repository: [https://github.com/matheuscruzsouza/my-angular-lib-workspace](https://github.com/matheuscruzsouza/my-angular-lib-workspace)
