@@ -1,11 +1,11 @@
-name: Publish to Github Package Registry
+name: Publish package ngx-gundb to Github Package Registry
 
 on:
   push:
     branches:
       - "main"
     paths:
-      - "projects/**"
+      - "projects/ngx-gundb"
 
 jobs:
   build:
