@@ -18,6 +18,12 @@ In the test project folder:
 npm link ngx-gundb && ng s
 ```
 
+## To publish
+
+```sh
+cd dist/ngx-gundb && npm publish --access public && cd ../..
+```
+
 ## Links
 
 - Repository: [https://github.com/matheuscruzsouza/my-angular-lib-workspace](https://github.com/matheuscruzsouza/my-angular-lib-workspace)
