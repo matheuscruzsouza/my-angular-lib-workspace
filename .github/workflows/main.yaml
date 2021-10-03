@@ -1,6 +1,11 @@
 name: Publish to Github Package Registry
 
-on: [push]
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "projects/**"
 
 jobs:
   build:

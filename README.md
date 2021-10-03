@@ -1,5 +1,7 @@
 # MyWorkspace
 
+[![Publish to Github Package Registry](https://github.com/matheuscruzsouza/my-angular-lib-workspace/actions/workflows/main.yaml/badge.svg)](https://github.com/matheuscruzsouza/my-angular-lib-workspace/actions/workflows/main.yaml)
+
 This project is a workspace to build angular libraries.
 
 ## Local test
