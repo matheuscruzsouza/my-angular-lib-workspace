@@ -22,21 +22,6 @@ jobs:
         run: npm run build ngx-text-editor
       - name: Archive build
         if: success()
-        uses: actions/upload-artifact@v1
-        with:
-          name: deploy_dist
-          path: dist
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Download build
-        uses: actions/download-artifact@v1
-        with:
-          name: deploy_dist
-      - name: Publish to GitHub Packages
         run: npm publish deploy_dist/ngx-text-editor --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN }}
