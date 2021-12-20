@@ -24,6 +24,12 @@ npm link ngx-text-editor && ng s
 cd dist/ngx-text-editor && npm publish --access public && cd ../..
 ```
 
+## To use on your project
+
+```sh
+npm install @matheuscruzsouza/ngx-text-editor --registry=https://npm.pkg.github.com/matheuscruzsouza
+```
+
 ## Links
 
 - Repository: [https://github.com/matheuscruzsouza/my-angular-lib-workspace](https://github.com/matheuscruzsouza/my-angular-lib-workspace)

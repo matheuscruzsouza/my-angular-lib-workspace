@@ -24,6 +24,13 @@ npm link ngx-gundb && ng s
 cd dist/ngx-gundb && npm publish --access public && cd ../..
 ```
 
+## To use on your project
+
+```sh
+npm install @matheuscruzsouza/ngx-gundb --registry=https://npm.pkg.github.com/matheuscruzsouza
+```
+
+
 ## Links
 
 - Repository: [https://github.com/matheuscruzsouza/my-angular-lib-workspace](https://github.com/matheuscruzsouza/my-angular-lib-workspace)
