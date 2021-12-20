@@ -19,7 +19,7 @@ jobs:
       - name: Install npm Packages
         run: npm ci --registry=https://registry.npmjs.org/
       - name: Build
-        run: npm run build
+        run: npm run build ngx-text-editor
       - name: Archive build
         if: success()
         uses: actions/upload-artifact@v1
