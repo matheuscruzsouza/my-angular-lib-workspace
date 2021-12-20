@@ -2,10 +2,10 @@ name: Publish package ngx-text-editor to Github Package Registry
 
 on:
   push:
-    branches:
-      - "main"
     paths:
       - "projects/ngx-text-editor/**"
+    branches:
+      - "main"
 
 jobs:
   build:
