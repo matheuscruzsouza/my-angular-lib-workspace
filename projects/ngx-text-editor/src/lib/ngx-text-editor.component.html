@@ -14,12 +14,15 @@
     <button type="button" data-cmd="insertOrderedList"><i class='bx bx-list-ol'></i></button>
     <button type="button" data-cmd="insertUnorderedList"><i class='bx bx-list-ul'></i></button>
     <div class="separator"></div>
-    <input type="color" onchange="chooseColor($event)"> 
+    <div class="button-holder">
+        <button type="button"><i class='bx bx-font-color'></i></button>
+        <input type="color" onchange="chooseColor($event)"/>
+    </div>
     <select onclick="changeSize($event)">
-        <option *ng-for="let size of range(8)" value="{{size}}">{{size}}</option>
+        <option *ng-for="let size of [].constructor(8)" value="{{size}}">{{size}}</option>
     </select>
     <select onchange="changeFont($event)">
-        <option *ng-for="let font in fonts" value="{{font}}">{{font}}</option>
+        <option *ng-for="let font of fonts" value="{{font}}">{{font}}</option>
     </select>
     <div class="separator"></div>
     <button type="button" data-cmd="insertImage"><i class='bx bx-image'></i></button>
