@@ -134,7 +134,15 @@ export class NgxTextEditorComponent implements AfterViewInit {
       return ;
     }
 
-    this.content.execCommand('foreColor', false, event.value);
+    this.content.execCommand('foreColor', false, event.target.value);
+  }
+
+  changeFont(event: any){
+    if (!this.content) {
+      return ;
+    }
+
+    this.content.execCommand('fontName', false, event.target.value);
   }
 
   changeSize(event: any){
@@ -142,7 +150,7 @@ export class NgxTextEditorComponent implements AfterViewInit {
       return ;
     }
 
-    this.content.execCommand('fontSize', false, event.value);
+    this.content.execCommand('fontSize', false, event.target.value);
   }
 
   onKey(event: any): void {
