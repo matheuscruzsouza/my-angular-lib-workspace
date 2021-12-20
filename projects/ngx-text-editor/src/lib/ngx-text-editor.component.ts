@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'ngx-text-editor',
@@ -8,6 +8,8 @@ import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular
   ]
 })
 export class NgxTextEditorComponent implements AfterViewInit {
+
+  editable = true;
 
   @Output() keyup = new EventEmitter();
 
@@ -21,8 +23,6 @@ export class NgxTextEditorComponent implements AfterViewInit {
     let show = false;
 
     if (content) {
-      content.designMode = 'On';
-
       buttons.forEach(button => {
         button.addEventListener('click', () => {
           let cmd = button.getAttribute('data-cmd') || '';
@@ -49,10 +49,10 @@ export class NgxTextEditorComponent implements AfterViewInit {
                 link.target = '_blank';
   
                 link.addEventListener('mouseover', () => {
-                  content.designMode = 'Off';
+                  this.editable = false;
                 });
                 link.addEventListener('mouseout', () => {
-                  content.designMode = 'On';
+                  this.editable = true;
                 });
               });
   
