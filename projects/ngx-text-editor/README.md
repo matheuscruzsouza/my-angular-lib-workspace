@@ -1,20 +1,6 @@
-# MyWorkspace
+# NgxTextEditor
 
-[![Publish to Github Package Registry](https://github.com/matheuscruzsouza/my-angular-lib-workspace/actions/workflows/main.yaml/badge.svg)](https://github.com/matheuscruzsouza/my-angular-lib-workspace/actions/workflows/main.yaml)
-
-This project is a workspace to build angular libraries.
-
-## Login from github registry
-
-```bash
-npm login --scope=@OWNER --registry=https://npm.pkg.github.com
-```
-
-## Install from main repo
-
-```bash
-npm install --registry=https://registry.npmjs.org/ 
-```
+This library encapsule the .
 
 ## Local test
 
@@ -23,19 +9,19 @@ to test the library in the local environment, run the following codes:
 In the workspace folder:
 
 ```sh
-ng build <library name> && cd dist/<library name> && npm link && cd ../..
+ng build ngx-text-editor && cd dist/ngx-text-editor && npm link && cd ../..
 ```
 
 In the test project folder:
 
 ```sh
-npm link <library name> && ng s
+npm link ngx-text-editor && ng s
 ```
 
 ## To publish
 
 ```sh
-cd dist/<library name> && npm publish --access public && cd ../..
+cd dist/ngx-text-editor && npm publish --access public && cd ../..
 ```
 
 ## Links

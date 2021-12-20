@@ -1,0 +1,13 @@
+:host button {
+    border: none;
+    outline: none;
+
+    width: 30px;
+    height: 30px;
+
+    cursor: pointer;
+}
+
+:host .active {
+    border: 1px solid crimson;
+}

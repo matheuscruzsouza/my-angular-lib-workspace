@@ -12,7 +12,14 @@
     "declaration": false,
     "downlevelIteration": true,
     "paths": {
-      "ngx-gundb": ["dist/ngx-gundb/ngx-gundb", "dist/ngx-gundb"]
+      "ngx-gundb": [
+        "dist/ngx-gundb/ngx-gundb",
+        "dist/ngx-gundb"
+      ],
+      "ngx-text-editor": [
+        "dist/ngx-text-editor/ngx-text-editor",
+        "dist/ngx-text-editor"
+      ]
     },
     "experimentalDecorators": true,
     "moduleResolution": "node",
