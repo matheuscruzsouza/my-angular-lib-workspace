@@ -7,5 +7,13 @@
   },
   "dependencies": {
     "tslib": "^2.0.0"
+  },
+  "publishConfig": {
+    "name": "@matheuscruzsouza/ngx-text-editor",
+    "registry": "https://npm.pkg.github.com/matheuscruzsouza/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matheuscruzsouza/my-angular-lib-workspace.git"
   }
 }
