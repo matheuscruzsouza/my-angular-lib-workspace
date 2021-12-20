@@ -22,6 +22,6 @@ jobs:
         run: npm run build ngx-text-editor
       - name: Archive build
         if: success()
-        run: npm publish deploy_dist/ngx-text-editor --access public
+        run: npm publish dist/ngx-text-editor --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN }}
