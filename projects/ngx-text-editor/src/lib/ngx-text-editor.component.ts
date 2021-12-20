@@ -12,7 +12,7 @@ export class NgxTextEditorComponent implements AfterViewInit {
 
   editable = true;
 
-  selectedColor = new FormControl("#000");
+  selectedColor = "#000";
 
   fonts = [
     'Arial',
