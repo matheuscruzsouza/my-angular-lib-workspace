@@ -15,7 +15,7 @@
     <button type="button" data-cmd="insertUnorderedList"><i class='bx bx-list-ul'></i></button>
     <div class="separator"></div>
     <div class="button-holder">
-        <button type="button"><i class='bx bx-font-color' [style]="color: {{selectedColor}}"></i></button>
+        <button type="button"><i class='bx bx-font-color' [ngStyle]="{'color': selectedColor}"></i></button>
         <input type="color" (change)="chooseColor($event)" ([ngModel])="selectedColor"/>
     </div>
     <select>
