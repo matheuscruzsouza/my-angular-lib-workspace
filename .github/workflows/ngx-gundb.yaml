@@ -16,6 +16,8 @@ jobs:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
           scope: "@matheuscruzsouza"
+      - name: Install npm Packages
+        run: npm ci --registry=https://registry.npmjs.org/
       - name: Publish to GitHub Packages
         run: npm ci && npm publish projects/ngx-gundb --access public
         env:
