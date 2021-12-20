@@ -139,20 +139,20 @@ export class NgxTextEditorComponent implements AfterViewInit {
     this.content.execCommand('foreColor', false, event.target.value);
   }
 
-  changeFont(value: any){
+  changeFont(event: any){
     if (!this.content) {
       return ;
     }
 
-    this.content.execCommand('fontName', false, value);
+    this.content.execCommand('fontName', false, event.target.value);
   }
 
-  changeSize(value: any){
+  changeSize(event: any){
     if (!this.content) {
       return ;
     }
 
-    this.content.execCommand('fontSize', false, value);
+    this.content.execCommand('fontSize', false, event.target.value);
   }
 
   onKey(event: any): void {

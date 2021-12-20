@@ -18,11 +18,11 @@
         <button type="button"><i class='bx bx-font-color' [style.color]="selectedColor"></i></button>
         <input type="color" (change)="chooseColor($event)" [value]="selectedColor"/>
     </div>
-    <select>
-        <option *ngFor="let item of [].constructor(8); let i = index" [value]="i + 1" (click)="changeSize(i + 1)">{{i + 1}}</option>
+    <select (change)="changeSize($event)">
+        <option *ngFor="let item of [].constructor(8); let i = index" [value]="i + 1" >{{i + 1}}</option>
     </select>
-    <select>
-        <option *ngFor="let font of fonts" [value]="font" (click)="changeFont(font)">{{font}}</option>
+    <select (change)="changeFont($event)">
+        <option *ngFor="let font of fonts" [value]="font">{{font}}</option>
     </select>
     <div class="separator"></div>
     <button type="button" data-cmd="insertImage"><i class='bx bx-image'></i></button>
