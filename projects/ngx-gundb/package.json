@@ -1,6 +1,6 @@
 {
   "name": "@matheuscruzsouza/ngx-gundb",
-  "version": "0.0.5-rc",
+  "version": "0.0.5-rc1",
   "peerDependencies": {
     "@angular/common": "^9.1.11",
     "@angular/core": "^9.1.11",

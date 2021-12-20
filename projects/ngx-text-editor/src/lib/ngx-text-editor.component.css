@@ -8,6 +8,20 @@
     cursor: pointer;
 }
 
+:host button:hover {
+    background-color: #c5c5c5;
+}
+
 :host .active {
     border: 1px solid crimson;
+}
+
+:host form {
+    background-color: #efefef;
+    border: 1px solid #efefef;
+}
+
+:host #output {
+    width: 99.7%;
+    border: 1px solid #efefef;
 }
