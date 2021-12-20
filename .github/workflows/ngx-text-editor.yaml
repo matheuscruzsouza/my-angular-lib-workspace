@@ -37,7 +37,6 @@ jobs:
         with:
           name: deploy_dist
       - name: Publish to GitHub Packages
-        run: npm publish projects/ngx-text-editor --access public
+        run: npm publish deploy_dist/ngx-text-editor --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN }}
-          FOLDER: deploy_dist/ngx-text-editor
