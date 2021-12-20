@@ -8,6 +8,13 @@
     cursor: pointer;
 }
 
+:host .separator {
+    width: 30px;
+    height: 30px;
+
+    background-color: #efefef;
+}
+
 :host button:hover {
     background-color: #c5c5c5;
 }
