@@ -19,6 +19,6 @@ jobs:
       - name: Install npm Packages
         run: npm ci --registry=https://registry.npmjs.org/
       - name: Publish to GitHub Packages
-        run: npm publish projects/ngx-text-editor --access public
+        run: ng build ngx-text-editor && cd dist/ngx-text-editor && npm publish projects/ngx-text-editor --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN }}
