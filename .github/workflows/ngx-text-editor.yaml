@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - "main"
-    paths:
-      - "projects/ngx-text-editor/**"
 
 jobs:
   build:
