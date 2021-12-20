@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'ngx-text-editor',
@@ -10,6 +11,8 @@ import { AfterViewInit, Component, EventEmitter, Output } from '@angular/core';
 export class NgxTextEditorComponent implements AfterViewInit {
 
   editable = true;
+
+  selectedColor = new FormControl("#000");
 
   fonts = [
     'Arial',
