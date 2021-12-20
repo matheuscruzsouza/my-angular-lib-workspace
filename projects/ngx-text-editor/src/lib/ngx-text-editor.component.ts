@@ -11,6 +11,21 @@ export class NgxTextEditorComponent implements AfterViewInit {
 
   editable = true;
 
+  fonts = [
+    'Arial',
+    'Helvetica',
+    'Times New Roman',
+    'Sans serif',
+    'Courier New',
+    'Verdana',
+    'Georgia',
+    'Palatino',
+    'Garamond',
+    'Comic Sans MS',
+    'Arial Black',
+    'Tahoma'
+  ]
+
   @Output() keyup = new EventEmitter();
 
   constructor() { }
@@ -78,6 +93,24 @@ export class NgxTextEditorComponent implements AfterViewInit {
           }
         });
       });
+    }
+  }
+
+  chooseColor(event: any){
+    const iframe = document.getElementById('output') as HTMLIFrameElement;
+    const content = iframe.contentDocument || iframe.contentWindow?.document;
+
+    if (content) {
+      content.execCommand('foreColor', false, event.value);
+    }
+  }
+
+  changeSize(event: any){
+    const iframe = document.getElementById('output') as HTMLIFrameElement;
+    const content = iframe.contentDocument || iframe.contentWindow?.document;
+
+    if (content) {
+      content.execCommand('fontSize', false, event.value);
     }
   }
 

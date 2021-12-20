@@ -8,6 +8,11 @@
     cursor: pointer;
 }
 
+:host select {
+    border: none;
+    outline: none;
+}
+
 :host .separator {
     width: 5px;
     height: 20px;
