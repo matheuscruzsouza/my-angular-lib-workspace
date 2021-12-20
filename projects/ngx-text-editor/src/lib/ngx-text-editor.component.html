@@ -19,7 +19,7 @@
         <input type="color" (change)="chooseColor($event)" [value]="selectedColor"/>
     </div>
     <select>
-        <option *ngFor="let size of [].constructor(8)" [value]="size" (click)="changeSize(size)">{{size}}</option>
+        <option *ngFor="let item of [].constructor(8); let i = index" [value]="i" (click)="changeSize(i)">{{i}}</option>
     </select>
     <select>
         <option *ngFor="let font of fonts" [value]="font" (click)="changeFont(font)">{{font}}</option>

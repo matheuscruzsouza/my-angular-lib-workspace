@@ -14,6 +14,9 @@ export class NgxTextEditorComponent implements AfterViewInit {
 
   selectedColor = "#000";
 
+  private iframe: HTMLIFrameElement| undefined;
+  private content: Document | undefined;
+
   fonts = [
     'Arial',
     'Helvetica',
@@ -35,86 +38,111 @@ export class NgxTextEditorComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     const buttons = document.querySelectorAll('button');
-    const iframe = document.getElementById('output') as HTMLIFrameElement;
-    const content = iframe.contentDocument || iframe.contentWindow?.document;
+    
+    this.iframe = document.getElementById('output') as HTMLIFrameElement;
+    const tmpDoc = this.iframe.contentDocument || this.iframe.contentWindow?.document;
+
+    if (tmpDoc) {
+      this.content = tmpDoc;
+    } else {
+      return;
+    }
 
     let show = false;
 
-    if (content) {
-      content.designMode = 'on';
-
-      buttons.forEach(button => {
-        button.addEventListener('click', () => {
-          let cmd = button.getAttribute('data-cmd') || '';
-  
-          if (button.name === 'active') {
-            button.classList.toggle('active');
-          }
-  
-          if (['insertImage', 'createLink'].includes(cmd)) {
-            let url = prompt('Insira o link aqui', '')  || '';
-            content.execCommand(cmd, false, url);
-  
-            if (cmd === 'insertImage') {
-              const images = content.querySelectorAll('img') || [];
-  
-              images.forEach((image: HTMLImageElement) => {
-                image.style.width = '100%';
-              });
-              
-            } else {
-              const links = content.querySelectorAll('a') || [];
-  
-              links.forEach((link: HTMLAnchorElement) => {
-                link.target = '_blank';
-  
-                link.addEventListener('mouseover', () => {
-                  content.designMode = 'off';
-                });
-                link.addEventListener('mouseout', () => {
-                  content.designMode = 'on';
-                });
-              });
-  
-            }
-          } else {
-            content.execCommand(cmd, false, undefined);
-          }
-  
-          if (cmd === 'showCode') {
-            const textBody = content.querySelector('body');
-  
-            if (textBody) {
-              if (show) {
-                textBody.innerHTML = textBody.textContent || '';
-                show = false;
-              } else {
-                textBody.textContent = textBody.innerHTML;
-                show = true;
-              }
-            }
-          }
-        });
-      });
+    if (!this.content) {
+      return ;
     }
+    
+    this.content.designMode = 'on';
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        let cmd = button.getAttribute('data-cmd') || '';
+
+        if (button.name === 'active') {
+          button.classList.toggle('active');
+        }
+
+        if (['insertImage', 'createLink'].includes(cmd)) {
+          let url = prompt('Insira o link aqui', '')  || '';
+          
+          if (!this.content) {
+            return ;
+          }
+
+          this.content.execCommand(cmd, false, url);
+
+          if (cmd === 'insertImage') {
+            const images = this.content.querySelectorAll('img') || [];
+
+            images.forEach((image: HTMLImageElement) => {
+              image.style.width = '100%';
+            });
+            
+          } else {
+            const links = this.content.querySelectorAll('a') || [];
+
+            links.forEach((link: HTMLAnchorElement) => {
+              link.target = '_blank';
+
+              link.addEventListener('mouseover', () => {
+                if (!this.content) {
+                  return ;
+                }
+
+                this.content.designMode = 'off';
+              });
+              link.addEventListener('mouseout', () => {
+                if (!this.content) {
+                  return ;
+                }
+
+                this.content.designMode = 'on';
+              });
+            });
+
+          }
+        } else {
+          if (!this.content) {
+            return ;
+          }
+
+          this.content.execCommand(cmd, false, undefined);
+        }
+
+        if (cmd === 'showCode') {
+          const textBody = this.content.querySelector('body');
+
+          if (textBody) {
+            if (show) {
+              textBody.innerHTML = textBody.textContent || '';
+              show = false;
+            } else {
+              textBody.textContent = textBody.innerHTML;
+              show = true;
+            }
+          }
+        }
+      });
+    });
+    
   }
 
   chooseColor(event: any){
-    const iframe = document.getElementById('output') as HTMLIFrameElement;
-    const content = iframe.contentDocument || iframe.contentWindow?.document;
-
-    if (content) {
-      content.execCommand('foreColor', false, event.value);
+    if (!this.content) {
+      return ;
     }
+
+    this.content.execCommand('foreColor', false, event.value);
   }
 
   changeSize(event: any){
-    const iframe = document.getElementById('output') as HTMLIFrameElement;
-    const content = iframe.contentDocument || iframe.contentWindow?.document;
-
-    if (content) {
-      content.execCommand('fontSize', false, event.value);
+    if (!this.content) {
+      return ;
     }
+
+    this.content.execCommand('fontSize', false, event.value);
   }
 
   onKey(event: any): void {
