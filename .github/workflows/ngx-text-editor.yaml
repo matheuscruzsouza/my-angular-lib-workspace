@@ -5,7 +5,7 @@ on:
     branches:
       - "main"
     paths:
-      - "projects/ngx-text-editor"
+      - "projects/ngx-text-editor/**"
 
 jobs:
   build:
