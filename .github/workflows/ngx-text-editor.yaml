@@ -17,6 +17,7 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: "@matheuscruzsouza"
       - name: Publish to GitHub Packages
+        run: npm ci
         run: |
           npm publish projects/ngx-text-editor --access public
         env:
