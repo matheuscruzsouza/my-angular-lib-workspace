@@ -16,7 +16,9 @@ jobs:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
           scope: "@matheuscruzsouza"
+      - name: Install npm Packages
+        run: npm ci
       - name: Publish to GitHub Packages
-        run: npm ci && npm publish projects/ngx-text-editor --access public
+        run: npm publish projects/ngx-text-editor --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN }}
