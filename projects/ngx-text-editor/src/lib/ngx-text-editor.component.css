@@ -9,10 +9,16 @@
 }
 
 :host .separator {
-    width: 30px;
-    height: 30px;
+    width: 5px;
+    height: 20px;
 
     background-color: #efefef;
+    display: inline-block;
+
+    margin-bottom: -5px;
+    margin-left: 5px;
+    
+    border-left: 2px solid #e1e1e1;
 }
 
 :host button:hover {
