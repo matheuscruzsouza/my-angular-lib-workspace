@@ -2,7 +2,7 @@
 
 <form>
     <button type="button" data-cmd="justifyLeft"><i class='bx bx-align-left'></i></button>
-    <button type="button" data-cmd="justifyCenter"><i class='bx bx-align-center'></i></button>
+    <button type="button" data-cmd="justifyCenter"><i class='bx bx-align-middle'></i></button>
     <button type="button" data-cmd="justifyRight"><i class='bx bx-align-right'></i></button>
     <button type="button" data-cmd="justifyFull"><i class='bx bx-align-justify'></i></button>
 
@@ -18,4 +18,4 @@
 
     <button type="button" data-cmd="showCode" name="active"><i class='bx bx-code-block'></i></button>
 </form>
-<iframe id="output" name="textField" src='about:blank' (keyup)="onKey($event)" [contenteditable]="editable"></iframe>
+<iframe id="output" name="textField" src='about:blank' (keyup)="onKey($event)"></iframe>

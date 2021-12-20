@@ -17,12 +17,14 @@ export class NgxTextEditorComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     const buttons = document.querySelectorAll('button');
-    const iframe = document.getElementById('textField') as HTMLIFrameElement;
+    const iframe = document.getElementById('output') as HTMLIFrameElement;
     const content = iframe.contentDocument || iframe.contentWindow?.document;
 
     let show = false;
 
     if (content) {
+      content.designMode = 'on';
+
       buttons.forEach(button => {
         button.addEventListener('click', () => {
           let cmd = button.getAttribute('data-cmd') || '';
@@ -49,10 +51,10 @@ export class NgxTextEditorComponent implements AfterViewInit {
                 link.target = '_blank';
   
                 link.addEventListener('mouseover', () => {
-                  this.editable = false;
+                  content.designMode = 'off';
                 });
                 link.addEventListener('mouseout', () => {
-                  this.editable = true;
+                  content.designMode = 'on';
                 });
               });
   
