@@ -134,6 +134,8 @@ export class NgxTextEditorComponent implements AfterViewInit {
       return ;
     }
 
+    this.selectedColor = event.target.value;
+
     this.content.execCommand('foreColor', false, event.target.value);
   }
 
