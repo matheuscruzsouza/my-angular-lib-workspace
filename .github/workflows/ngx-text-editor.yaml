@@ -20,7 +20,7 @@ jobs:
         run: npm ci --registry=https://registry.npmjs.org/
       - name: Build
         run: npm run build ngx-text-editor
-      - name: Archive build
+      - name: Publish to GitHub Packages
         if: success()
         run: npm publish dist/ngx-text-editor --access public
         env:

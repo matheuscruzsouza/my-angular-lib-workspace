@@ -18,7 +18,10 @@ jobs:
           scope: "@matheuscruzsouza"
       - name: Install npm Packages
         run: npm ci --registry=https://registry.npmjs.org/
+      - name: Build
+        run: npm run build ngx-gundb
       - name: Publish to GitHub Packages
-        run: ng build ngx-gundb && cd dist/ngx-gundb && npm ci && npm publish projects/ngx-gundb --access public
+        if: success()
+        run: npm publish projects/ngx-gundb --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN }}

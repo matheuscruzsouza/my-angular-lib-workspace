@@ -1,6 +1,6 @@
 {
   "name": "@matheuscruzsouza/ngx-text-editor",
-  "version": "0.0.4-rc",
+  "version": "0.0.4-rc1",
   "peerDependencies": {
     "@angular/common": "^11.2.12",
     "@angular/core": "^11.2.12"
