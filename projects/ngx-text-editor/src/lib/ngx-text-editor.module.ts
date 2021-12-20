@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgxTextEditorComponent } from './ngx-text-editor.component';
 
 
@@ -8,6 +9,7 @@ import { NgxTextEditorComponent } from './ngx-text-editor.component';
     NgxTextEditorComponent
   ],
   imports: [
+    BrowserModule
   ],
   exports: [
     NgxTextEditorComponent
