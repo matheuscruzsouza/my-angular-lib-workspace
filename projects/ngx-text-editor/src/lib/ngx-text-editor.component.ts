@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'ngx-text-editor',
@@ -8,6 +8,9 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
   ]
 })
 export class NgxTextEditorComponent implements AfterViewInit {
+
+  @Output() keyup = new EventEmitter();
+
   constructor() { }
 
   ngAfterViewInit(): void {
@@ -79,4 +82,7 @@ export class NgxTextEditorComponent implements AfterViewInit {
     });
   }
 
+  onKey(event: any): void {
+    this.keyup.emit(event.target.value);
+  }
 }
