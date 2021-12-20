@@ -2,8 +2,9 @@ name: Publish package ngx-gundb to Github Package Registry
 
 on:
   push:
-    branches:
-      - "main"
+    branches: ["main"]
+    paths:
+    - projects/ngx-gundb/**
 
 jobs:
   build:
