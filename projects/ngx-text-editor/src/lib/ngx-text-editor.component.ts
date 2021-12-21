@@ -160,13 +160,13 @@ export class NgxTextEditorComponent implements AfterViewInit {
 
         reader.onload = function (e: any) {
 
-          console.log(URL.createObjectURL(e.target.result));
+          console.log(e.target.result);
           
           if (!self.content) {
             return ;
           }
         
-          self.content.execCommand('insertImage', false, URL.createObjectURL(e.target.result));
+          self.content.execCommand('insertImage', false, e.target.result);
 
           const images = self.content.querySelectorAll('img') || [];
 
