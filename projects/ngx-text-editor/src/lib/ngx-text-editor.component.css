@@ -6,10 +6,17 @@
     height: 30px;
 
     cursor: pointer;
+
+    position: relative;
+    top: -5px;
 }
 
 :host button i {
     font-size: 20px;
+
+    position: absolute;
+    top: 4px;
+    left: 3.5px;
 }
 
 :host select {
