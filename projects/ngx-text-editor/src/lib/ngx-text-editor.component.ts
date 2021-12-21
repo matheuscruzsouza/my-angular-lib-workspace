@@ -161,7 +161,7 @@ export class NgxTextEditorComponent implements AfterViewInit {
           return ;
         }
 
-        const imgRaw = "<img src='" + e.target.result + "' id='" + event.target.files[0].name + "'>";
+        const imgRaw = "<img src='" + e.target.result + "' />";
 
         console.log(imgRaw);
       
