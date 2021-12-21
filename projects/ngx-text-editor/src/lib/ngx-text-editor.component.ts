@@ -157,13 +157,14 @@ export class NgxTextEditorComponent implements AfterViewInit {
     
     if(event.target.files && event.target.files.length) {
       const [file] = event.target.files;
-      reader.readAsDataURL(file);
+
+      console.log(file);
       
       if (!this.content) {
         return ;
       }
     
-      this.content.execCommand('insertImage', false, file[0]);
+      this.content.execCommand('insertImage', false, file);
 
       const images = this.content.querySelectorAll('img') || [];
 
