@@ -162,7 +162,7 @@ export class NgxTextEditorComponent implements AfterViewInit {
 
       const imgRaw = "<img src='" + e.target.result + "' />";
 
-      console.log(imgRaw);
+      console.log(this.content, "execCommand('insertHTML', false, " + imgRaw + ")");
     
       this.content.execCommand('insertHTML', false, imgRaw);
 
