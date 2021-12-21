@@ -8,6 +8,10 @@
     cursor: pointer;
 }
 
+:host button i {
+    font-size: 20px;
+}
+
 :host select {
     border: none;
     outline: none;

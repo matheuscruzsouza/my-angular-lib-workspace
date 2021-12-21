@@ -31,7 +31,10 @@
         </select>
     </div>
     <div class="separator"></div>
-    <button type="button" data-cmd="insertImage"><i class='bx bx-image'></i></button>
+    <div class="button-holder">
+        <button type="button" data-cmd="insertImage"><i class='bx bx-image'></i></button>
+        <input type="file" (change)="onFileChange($event)"/>
+    </div>
     <button type="button" data-cmd="createLink"><i class='bx bx-link'></i></button>
     <div class="separator"></div>
     <button type="button" data-cmd="undo"><i class='bx bx-undo'></i></button>

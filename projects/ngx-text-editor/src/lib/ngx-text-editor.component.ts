@@ -70,7 +70,7 @@ export class NgxTextEditorComponent implements AfterViewInit {
           button.classList.toggle('active');
         }
 
-        if (['insertImage', 'createLink'].includes(cmd)) {
+        if (['createLink'].includes(cmd)) {
           let url = prompt('Insira o link aqui', '')  || '';
           
           if (!this.content) {
@@ -79,36 +79,27 @@ export class NgxTextEditorComponent implements AfterViewInit {
 
           this.content.execCommand(cmd, false, url);
 
-          if (cmd === 'insertImage') {
-            const images = this.content.querySelectorAll('img') || [];
+          const links = this.content.querySelectorAll('a') || [];
 
-            images.forEach((image: HTMLImageElement) => {
-              image.style.width = '100%';
+          links.forEach((link: HTMLAnchorElement) => {
+            link.target = '_blank';
+
+            link.addEventListener('mouseover', () => {
+              if (!this.content) {
+                return ;
+              }
+
+              this.content.designMode = 'off';
             });
-            
-          } else {
-            const links = this.content.querySelectorAll('a') || [];
+            link.addEventListener('mouseout', () => {
+              if (!this.content) {
+                return ;
+              }
 
-            links.forEach((link: HTMLAnchorElement) => {
-              link.target = '_blank';
-
-              link.addEventListener('mouseover', () => {
-                if (!this.content) {
-                  return ;
-                }
-
-                this.content.designMode = 'off';
-              });
-              link.addEventListener('mouseout', () => {
-                if (!this.content) {
-                  return ;
-                }
-
-                this.content.designMode = 'on';
-              });
+              this.content.designMode = 'on';
             });
+          });
 
-          }
         } else {
           if (!this.content) {
             return ;
@@ -159,6 +150,33 @@ export class NgxTextEditorComponent implements AfterViewInit {
     }
 
     this.content.execCommand('fontSize', false, event.target.value);
+  }
+
+  onFileChange(event: any) {
+    const reader = new FileReader();
+    
+    if(event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+    
+      reader.onload = () => {
+   
+        const imageSrc = reader.result as string;
+
+        if (!this.content) {
+          return ;
+        }
+
+        this.content.execCommand('insertImage', false, imageSrc);
+
+        const images = this.content.querySelectorAll('img') || [];
+
+        images.forEach((image: HTMLImageElement) => {
+          image.style.width = '100%';
+        });
+      }
+    }
+
   }
 
   onKey(event: any): void {
