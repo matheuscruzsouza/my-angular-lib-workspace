@@ -1,18 +1,36 @@
 import { AfterViewInit, Component, EventEmitter, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'ngx-text-editor',
   templateUrl: './ngx-text-editor.component.html',
   styleUrls: [
     './ngx-text-editor.component.css'
+  ],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi:true,
+      useExisting: NgxTextEditorComponent
+    },
+    {
+      provide: NG_VALIDATORS,
+      multi: true,
+      useExisting: NgxTextEditorComponent
+    }
   ]
 })
-export class NgxTextEditorComponent implements AfterViewInit {
+export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewInit {
 
   editable = true;
 
   selectedColor = "#000";
+
+  value: any;
+
+  disabled = false;
+
+  touched = false;
 
   private iframe: HTMLIFrameElement| undefined;
   private content: Document | undefined;
@@ -42,6 +60,47 @@ export class NgxTextEditorComponent implements AfterViewInit {
 
   constructor() { }
 
+  onChange = (value: any) => {};
+
+  onTouched = () => {};
+
+  writeValue(obj: any): void {
+    if (!this.content) {
+      return;
+    }
+    
+    const textBody = this.content.querySelector('body');
+
+    if (!textBody) {
+      return;
+    }
+
+    textBody.textContent = obj;
+  }
+
+  registerOnChange(onChange: any): void {
+    this.onChange = onChange;
+  }
+
+  registerOnTouched(onTouched: any): void {
+    this.onTouched = onTouched;
+  }
+
+  setDisabledState(disabled: boolean) {
+    this.disabled = disabled;
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    return null;
+  }
+
+  markAsTouched() {
+    if (!this.touched) {
+      this.onTouched();
+      this.touched = true;
+    }
+  }
+
   ngAfterViewInit(): void {
     const buttons = document.querySelectorAll('button');
     
@@ -62,62 +121,69 @@ export class NgxTextEditorComponent implements AfterViewInit {
     
     this.content.designMode = 'on';
 
+    this.content.body.addEventListener('keydown', (event: any) => {
+      this.onChange(event.target.value);
+      this.keyup.emit(event.target.value);
+    });
+
     buttons.forEach(button => {
       button.addEventListener('click', () => {
         let cmd = button.getAttribute('data-cmd') || '';
 
-        if (button.name === 'active') {
-          button.classList.toggle('active');
-        }
-
-        if (['createLink'].includes(cmd)) {
-          let url = prompt('Insira o link aqui', '')  || '';
-          
-          if (!this.content) {
-            return ;
+        if (!this.disabled) {
+          if (button.name === 'active') {
+            button.classList.toggle('active');
           }
-
-          this.content.execCommand(cmd, false, url);
-
-          const links = this.content.querySelectorAll('a') || [];
-
-          links.forEach((link: HTMLAnchorElement) => {
-            link.target = '_blank';
-
-            link.addEventListener('mouseover', () => {
-              if (!this.content) {
-                return ;
-              }
-
-              this.content.designMode = 'off';
+  
+          if (['createLink'].includes(cmd)) {
+            let url = prompt('Insira o link aqui', '')  || '';
+            
+            if (!this.content) {
+              return ;
+            }
+  
+            this.content.execCommand(cmd, false, url);
+  
+            const links = this.content.querySelectorAll('a') || [];
+  
+            links.forEach((link: HTMLAnchorElement) => {
+              link.target = '_blank';
+  
+              link.addEventListener('mouseover', () => {
+                if (!this.content) {
+                  return ;
+                }
+  
+                this.content.designMode = 'off';
+              });
+              link.addEventListener('mouseout', () => {
+                if (!this.content) {
+                  return ;
+                }
+  
+                this.content.designMode = 'on';
+              });
             });
-            link.addEventListener('mouseout', () => {
-              if (!this.content) {
-                return ;
-              }
-
-              this.content.designMode = 'on';
-            });
-          });
-
-        } else {
-          if (!this.content) {
-            return ;
+  
+          } else {
+            if (!this.content) {
+              return ;
+            }
+  
+            this.content.execCommand(cmd, false, undefined);
           }
-
-          this.content.execCommand(cmd, false, undefined);
-        }
-
-        if (cmd === 'showCode') {
-          const textBody = this.content.querySelector('body');
-
-          if (textBody) {
-            if (show) {
-              textBody.innerHTML = textBody.textContent || '';
-              show = false;
-            } else {
-              textBody.textContent = textBody.innerHTML;
-              show = true;
+  
+          if (cmd === 'showCode') {
+            const textBody = this.content.querySelector('body');
+  
+            if (textBody) {
+              if (show) {
+                textBody.innerHTML = textBody.textContent || '';
+                show = false;
+              } else {
+                textBody.textContent = textBody.innerHTML;
+                show = true;
+              }
             }
           }
         }
@@ -173,9 +239,5 @@ export class NgxTextEditorComponent implements AfterViewInit {
     }
 
     reader.readAsDataURL(event.target.files[0]);
-  }
-
-  onKey(event: any): void {
-    this.keyup.emit(event.target.value);
   }
 }

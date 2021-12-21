@@ -72,6 +72,6 @@
 
 :host #output {
     width: 99.7%;
-    height: 100%;
+    height: inherit;
     border: 1px solid #efefef;
 }
