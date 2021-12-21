@@ -8,7 +8,7 @@
     cursor: pointer;
 
     position: relative;
-    top: 5px;
+    top: 1px;
 }
 
 :host button i {
@@ -72,5 +72,6 @@
 
 :host #output {
     width: 99.7%;
+    height: 100%;
     border: 1px solid #efefef;
 }
