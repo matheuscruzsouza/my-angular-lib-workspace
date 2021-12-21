@@ -22,7 +22,7 @@
     display:inline-block;
 }
 
-:host input[type=color], :host .button-holder select {
+:host input[type=color], :host .button-holder select, :host input[type=file] {
     left:0;
     top:0;
 
