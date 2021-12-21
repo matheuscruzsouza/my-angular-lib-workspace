@@ -18,7 +18,7 @@
     display:inline-block;
 }
 
-:host input[type=color] {
+:host input[type=color], :host .button-holder select {
     left:0;
     top:0;
 
