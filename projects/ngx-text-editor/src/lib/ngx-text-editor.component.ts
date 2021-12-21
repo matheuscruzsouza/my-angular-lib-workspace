@@ -29,7 +29,13 @@ export class NgxTextEditorComponent implements AfterViewInit {
     'Garamond',
     'Comic Sans MS',
     'Arial Black',
-    'Tahoma'
+    'Tahoma',
+    'Lucida Console',
+    'Monaco',
+    'Brush Script MT',
+    'Lucida Handwriting',
+    'Copperplate',
+    'Papyrus'
   ]
 
   @Output() keyup = new EventEmitter();
