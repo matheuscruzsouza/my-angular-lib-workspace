@@ -8,7 +8,7 @@
     cursor: pointer;
 
     position: relative;
-    top: -5px;
+    top: 5px;
 }
 
 :host button i {
@@ -16,7 +16,7 @@
 
     position: absolute;
     top: 4px;
-    left: 3.5px;
+    left: 4px;
 }
 
 :host select {
@@ -52,6 +52,9 @@
     margin-left: 5px;
     
     border-left: 2px solid #e1e1e1;
+
+    position: relative;
+    top: 5px;
 }
 
 :host button:hover {
