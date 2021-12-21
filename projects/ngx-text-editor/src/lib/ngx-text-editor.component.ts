@@ -152,33 +152,29 @@ export class NgxTextEditorComponent implements AfterViewInit {
     this.content.execCommand('fontSize', false, event.target.value);
   }
 
-  onFileChange(event: any) {    
-    if(event.target.files && event.target.files.length) {
-      var reader = new FileReader();
+  onFileChange(event: any) {
+    var reader = new FileReader();
 
-      reader.onload = (e: any) => {
-        if (!this.content) {
-          return ;
-        }
-
-        const imgRaw = "<img src='" + e.target.result + "' />";
-
-        console.log(imgRaw);
-      
-        this.content.execCommand('insertHTML', false, imgRaw);
-
-        const images = this.content.querySelectorAll('img') || [];
-
-        images.forEach((image: HTMLImageElement) => {
-          image.style.width = '100%';
-        });
-        
+    reader.onload = (e: any) => {
+      if (!this.content) {
+        return ;
       }
 
-      reader.readAsDataURL(event.target.files[0]);
+      const imgRaw = "<img src='" + e.target.result + "' />";
 
+      console.log(imgRaw);
+    
+      this.content.execCommand('insertHTML', false, imgRaw);
+
+      const images = this.content.querySelectorAll('img') || [];
+
+      images.forEach((image: HTMLImageElement) => {
+        image.style.width = '100%';
+      });
+      
     }
 
+    reader.readAsDataURL(event.target.files[0]);
   }
 
   onKey(event: any): void {
