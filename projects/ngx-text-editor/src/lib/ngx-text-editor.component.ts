@@ -37,23 +37,13 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
 
   fonts = [
     'Arial',
-    'Helvetica',
     'Times New Roman',
     'Sans serif',
     'Courier New',
     'Verdana',
-    'Georgia',
-    'Palatino',
-    'Garamond',
-    'Comic Sans MS',
-    'Arial Black',
-    'Tahoma',
-    'Lucida Console',
-    'Monaco',
-    'Brush Script MT',
-    'Lucida Handwriting',
-    'Copperplate',
-    'Papyrus'
+    'Roboto',
+    'Cookie',
+    'Lora'
   ]
 
   @Output() keyup = new EventEmitter();
