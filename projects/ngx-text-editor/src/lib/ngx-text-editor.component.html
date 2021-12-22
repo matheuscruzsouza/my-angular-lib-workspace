@@ -1,5 +1,11 @@
 <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+
 <form>
     <button type="button" data-cmd="justifyLeft"><i class='bx bx-align-left'></i></button>
     <button type="button" data-cmd="justifyCenter"><i class='bx bx-align-middle'></i></button>
@@ -27,7 +33,7 @@
     <div class="button-holder">
         <button type="button"><i class='bx bx-font'></i></button>
         <select (change)="changeFont($event)">
-            <option *ngFor="let font of fonts" [value]="font" [style.font-family]="'font'">{{font}}</option>
+            <option *ngFor="let font of fonts" [value]="font" [style.font-family]="\'font\'">{{font}}</option>
         </select>
     </div>
     <div class="separator"></div>
