@@ -119,7 +119,7 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
     
     this.content.designMode = 'on';
 
-    this.content.body.addEventListener('onkeyup', () => {
+    this.content.body.addEventListener('keyup', () => {
       if (!this.content) { return; }
 
       this.onChange(this.content.body.innerHTML);
