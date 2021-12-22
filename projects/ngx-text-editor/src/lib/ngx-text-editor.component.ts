@@ -119,7 +119,7 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
     
     this.content.designMode = 'on';
 
-    this.content.body.addEventListener('onchange', () => {
+    this.content.body.addEventListener('keypress', () => {
       if (!this.content) { return; }
 
       this.onChange(this.content.body.innerHTML);
@@ -143,6 +143,9 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
             }
   
             this.content.execCommand(cmd, false, url);
+
+            this.onChange(this.content.body.innerHTML);
+            this.keyup.emit(this.content.body.innerHTML);
   
             const links = this.content.querySelectorAll('a') || [];
   
@@ -171,6 +174,9 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
             }
   
             this.content.execCommand(cmd, false, undefined);
+
+            this.onChange(this.content.body.innerHTML);
+            this.keyup.emit(this.content.body.innerHTML);
           }
   
           if (cmd === 'showCode') {
@@ -200,6 +206,9 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
     this.selectedColor = event.target.value;
 
     this.content.execCommand('foreColor', false, event.target.value);
+
+    this.onChange(this.content.body.innerHTML);
+    this.keyup.emit(this.content.body.innerHTML);
   }
 
   changeFont(event: any){
@@ -208,6 +217,9 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
     }
 
     this.content.execCommand('fontName', false, event.target.value);
+
+    this.onChange(this.content.body.innerHTML);
+    this.keyup.emit(this.content.body.innerHTML);
   }
 
   changeSize(event: any){
@@ -216,6 +228,9 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
     }
 
     this.content.execCommand('fontSize', false, event.target.value);
+
+    this.onChange(this.content.body.innerHTML);
+    this.keyup.emit(this.content.body.innerHTML);
   }
 
   onFileChange(event: any) {
@@ -229,6 +244,9 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
       const imgRaw = "<img src='" + e.target.result + "' />";
     
       this.content.execCommand('insertHTML', false, imgRaw);
+
+      this.onChange(this.content.body.innerHTML);
+      this.keyup.emit(this.content.body.innerHTML);
 
       const images = this.content.querySelectorAll('img') || [];
 
