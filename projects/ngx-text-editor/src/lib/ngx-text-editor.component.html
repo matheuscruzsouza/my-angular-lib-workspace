@@ -33,7 +33,7 @@
     <div class="button-holder">
         <button type="button"><i class='bx bx-font'></i></button>
         <select (change)="changeFont($event)">
-            <option *ngFor="let font of fonts" [value]="font" [style.font-family]="\'font\'">{{font}}</option>
+            <option *ngFor="let font of fonts" [value]="font" [style.font-family]="{{font}}">{{font}}</option>
         </select>
     </div>
     <div class="separator"></div>
