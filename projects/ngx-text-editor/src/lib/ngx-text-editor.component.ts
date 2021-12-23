@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Output } from '@angular/core';
+import { AfterContentChecked, AfterViewInit, Component, ElementRef, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
 
 @Component({
@@ -20,7 +20,7 @@ import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR
     }
   ]
 })
-export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewInit {
+export class NgxTextEditorComponent implements ControlValueAccessor, AfterContentChecked {
 
   editable = true;
 
@@ -91,7 +91,7 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
     }
   }
 
-  ngAfterViewInit(): void {
+  ngAfterContentChecked(): void {
     const buttons = document.querySelectorAll('button');
     
     this.iframe = document.getElementById('output') as HTMLIFrameElement;
@@ -116,15 +116,11 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
       this.keyup.emit(this.content.body.innerHTML);
     });
 
-    this.elementRef.nativeElement.querySelectorAll("link, style").forEach((htmlElement: HTMLLinkElement | HTMLStyleElement) => {
+    this.elementRef.nativeElement.querySelectorAll("link").forEach((htmlElement: HTMLLinkElement | HTMLStyleElement) => {
       if (this.content) {
         const head = this.content.head;
         const hasStyle = Array.from(head.children).filter(
-          (node: Element) => {
-            console.log(htmlElement, node);
-            
-            return node.textContent == htmlElement.textContent;
-          }
+          (node: Element) => node.textContent == htmlElement.textContent
         ).length;
 
         if (!hasStyle) {
