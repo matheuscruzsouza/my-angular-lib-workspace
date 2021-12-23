@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterViewInit, Component, ElementRef, EventEmitter, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
 
 @Component({
@@ -20,7 +20,7 @@ import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR
     }
   ]
 })
-export class NgxTextEditorComponent implements ControlValueAccessor, AfterContentChecked {
+export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewInit {
 
   editable = true;
 
@@ -91,34 +91,83 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterConten
     }
   }
 
-  ngAfterContentChecked(): void {
-    const buttons = document.querySelectorAll('button');
-    
+  ngAfterViewInit(): void {
     this.iframe = document.getElementById('output') as HTMLIFrameElement;
-    const tmpDoc = this.iframe.contentDocument || this.iframe.contentWindow?.document;
-
-    if (tmpDoc) {
-      this.content = tmpDoc;
-    } else {
-      return;
-    }
-
-    let show = false;
+    this.content = this.iframe.contentDocument || this.iframe.contentWindow?.document;
 
     if (!this.content) { return ; }
     
     this.content.designMode = 'on';
 
-    this.content.body.addEventListener('keyup', () => {
-      if (!this.content) { return; }
+    this.setEventListener();
+
+    this.setFonts();
+
+    this.setButtonActions();
+  }
+
+  chooseColor(event: any){
+    if (!this.content) {
+      return ;
+    }
+
+    this.selectedColor = event.target.value;
+
+    this.content.execCommand('foreColor', false, event.target.value);
+
+    this.onChange(this.content.body.innerHTML);
+    this.keyup.emit(this.content.body.innerHTML);
+  }
+
+  changeFont(event: any){
+    if (!this.content) {
+      return ;
+    }
+
+    this.content.execCommand('fontName', false, event.target.value);
+
+    this.onChange(this.content.body.innerHTML);
+    this.keyup.emit(this.content.body.innerHTML);
+  }
+
+  changeSize(event: any){
+    if (!this.content) {
+      return ;
+    }
+
+    this.content.execCommand('fontSize', false, event.target.value);
+
+    this.onChange(this.content.body.innerHTML);
+    this.keyup.emit(this.content.body.innerHTML);
+  }
+
+  onFileChange(event: any) {
+    var reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      if (!this.content) {
+        return ;
+      }
+
+      const imgRaw = "<img src='" + e.target.result + "' />";
+    
+      this.content.execCommand('insertHTML', false, imgRaw);
 
       this.onChange(this.content.body.innerHTML);
       this.keyup.emit(this.content.body.innerHTML);
-    });
 
-    console.log(this.elementRef.nativeElement.querySelectorAll("link"));
-    
+      const images = this.content.querySelectorAll('img') || [];
 
+      images.forEach((image: HTMLImageElement) => {
+        image.style.width = '100%';
+      });
+      
+    }
+
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
+  private setFonts() {
     this.elementRef.nativeElement.querySelectorAll("link")
     .forEach((htmlElement: HTMLLinkElement) => {
       if (this.content) {
@@ -134,6 +183,12 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterConten
         }
       }
     });
+  }
+
+  private setButtonActions() {
+    const buttons = document.querySelectorAll('button');
+
+    let show = false;
 
     buttons.forEach(button => {
       button.addEventListener('click', () => {
@@ -204,67 +259,16 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterConten
         }
       });
     });
-    
   }
 
-  chooseColor(event: any){
-    if (!this.content) {
-      return ;
-    }
+  private setEventListener() {
+    if (!this.content) { return ; }
 
-    this.selectedColor = event.target.value;
-
-    this.content.execCommand('foreColor', false, event.target.value);
-
-    this.onChange(this.content.body.innerHTML);
-    this.keyup.emit(this.content.body.innerHTML);
-  }
-
-  changeFont(event: any){
-    if (!this.content) {
-      return ;
-    }
-
-    this.content.execCommand('fontName', false, event.target.value);
-
-    this.onChange(this.content.body.innerHTML);
-    this.keyup.emit(this.content.body.innerHTML);
-  }
-
-  changeSize(event: any){
-    if (!this.content) {
-      return ;
-    }
-
-    this.content.execCommand('fontSize', false, event.target.value);
-
-    this.onChange(this.content.body.innerHTML);
-    this.keyup.emit(this.content.body.innerHTML);
-  }
-
-  onFileChange(event: any) {
-    var reader = new FileReader();
-
-    reader.onload = (e: any) => {
-      if (!this.content) {
-        return ;
-      }
-
-      const imgRaw = "<img src='" + e.target.result + "' />";
-    
-      this.content.execCommand('insertHTML', false, imgRaw);
+    this.content.body.addEventListener('keyup', () => {
+      if (!this.content) { return; }
 
       this.onChange(this.content.body.innerHTML);
       this.keyup.emit(this.content.body.innerHTML);
-
-      const images = this.content.querySelectorAll('img') || [];
-
-      images.forEach((image: HTMLImageElement) => {
-        image.style.width = '100%';
-      });
-      
-    }
-
-    reader.readAsDataURL(event.target.files[0]);
+    });
   }
 }
