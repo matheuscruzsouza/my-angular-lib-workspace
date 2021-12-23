@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
 
 @Component({
@@ -48,7 +48,7 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
 
   @Output() keyup = new EventEmitter();
 
-  constructor() { }
+  constructor(private elementRef: ElementRef) { }
 
   onChange = (value: any) => {};
 
@@ -114,6 +114,25 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
 
       this.onChange(this.content.body.innerHTML);
       this.keyup.emit(this.content.body.innerHTML);
+    });
+
+    this.elementRef.nativeElement.querySelectorAll("link, style").forEach((htmlElement: HTMLLinkElement | HTMLStyleElement) => {
+      let add = true;
+
+      if (this.content) {
+        Array.from(this.content.head.children).forEach(
+          (node: Element) => {
+            if (node.textContent == htmlElement.textContent) {
+              add = false;
+            }
+          }
+        );
+        if (add) {
+          this.content.head.appendChild(
+            htmlElement.cloneNode(true)
+          );
+        }
+      }
     });
 
     buttons.forEach(button => {
