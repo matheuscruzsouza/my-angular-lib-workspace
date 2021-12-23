@@ -117,18 +117,18 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
     });
 
     this.elementRef.nativeElement.querySelectorAll("link, style").forEach((htmlElement: HTMLLinkElement | HTMLStyleElement) => {
-      let add = true;
-
       if (this.content) {
-        Array.from(this.content.head.children).forEach(
+        const head = this.content.head;
+        const hasStyle = Array.from(head.children).filter(
           (node: Element) => {
-            if (node.textContent == htmlElement.textContent) {
-              add = false;
-            }
+            console.log(htmlElement, node);
+            
+            return node.textContent == htmlElement.textContent;
           }
-        );
-        if (add) {
-          this.content.head.appendChild(
+        ).length;
+
+        if (!hasStyle) {
+          head.appendChild(
             htmlElement.cloneNode(true)
           );
         }
