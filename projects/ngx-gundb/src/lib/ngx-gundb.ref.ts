@@ -5,6 +5,8 @@ import { Observable } from "rxjs";
 import * as Gun from "gun";
 import { SEA } from "gun";
 import "gun/sea.js";
+import "gun/lib/load.js";
+import "gun/lib/open.js";
 
 @Injectable()
 export class NgxGundbRef {
@@ -60,7 +62,7 @@ export class NgxGundbRef {
    * @returns NgxGundbRef
    */
   put(data: string | Object): NgxGundbRef {
-    return NgxGundbRef.create(this.gun.put(data));
+    return NgxGundbRef.create(this.gun.put(this.array2object(data)));
   }
 
   /**
@@ -121,6 +123,24 @@ export class NgxGundbRef {
     });
   }
 
+  /**
+   * Returns a node from the Gun database
+   * @param key string
+   * @returns NgxGundbRef
+   */
+   open(key: string): NgxGundbRef {
+    return NgxGundbRef.create(this.gun.open(key));
+  }
+
+  /**
+   * Returns a node from the Gun database
+   * @param key string
+   * @returns NgxGundbRef
+   */
+   load(key: string): NgxGundbRef {
+    return NgxGundbRef.create(this.gun.load(key));
+  }
+
   protected isEmpty(objectToCheck: Object): boolean {
     return objectToCheck.constructor === Object
       ? Object.entries(objectToCheck).length === 0
@@ -141,5 +161,25 @@ export class NgxGundbRef {
       data,
       (val: any, key: string) => val !== null && key !== "_"
     );
+  }
+
+  private array2object(arr: any) {
+    var obj: any = {}
+
+    this.gun.list.map(arr, (v: any, f: any, t: any) => {
+      if (this.gun.list.is(v) || this.gun.obj.is(v)) {
+        obj[f] = this.array2object(v)
+        return
+      }
+      if (isNaN(f)) obj[f] = v
+      else obj[f - 1] = v
+    })
+
+    if (obj[0]) {
+      obj.length = Object.keys(obj).sort().pop()
+      obj.length++
+    }
+
+    return obj
   }
 }
