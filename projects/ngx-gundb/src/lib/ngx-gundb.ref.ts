@@ -15,14 +15,17 @@ export class NgxGundbRef {
   constructor(
     @Inject("ngxGundbOptions") protected options: NgxGundbOptions = {}
   ) {
-    this.gun = Gun();
 
     if (!this.isEmpty(this.options)) {
+      this.gun = Gun(this.options.peers);
+
       if (this.options.SEA) {
         this.gun.SEA = SEA;
       }
 
       this.gun.opt(this.options);
+    } else {
+      this.gun = Gun();
     }
   }
 
