@@ -196,6 +196,10 @@ export class NgxGundbRef {
   }
 
   array2object(arr: any) {
+    if (arr == null) {
+      return arr;
+    }
+
     let obj: any = {}
 
     Object.entries(arr).forEach(entrie => {
