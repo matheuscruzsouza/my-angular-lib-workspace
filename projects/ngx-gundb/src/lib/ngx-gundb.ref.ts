@@ -71,7 +71,7 @@ export class NgxGundbRef {
    * @returns NgxGundbRef
    */
   set(data: string | Object): NgxGundbRef {
-    return NgxGundbRef.create(this.gun.set(data));
+    return NgxGundbRef.create(this.gun.set(this.gun.put(data)));
   }
 
   /**
@@ -163,16 +163,15 @@ export class NgxGundbRef {
     );
   }
 
-  private array2object(arr: any) {
-    var obj: any = {}
+  array2object(arr: any) {
+    let obj: any = {}
 
-    this.gun.list.map(arr, (v: any, f: any, t: any) => {
-      if (this.gun.list.is(v) || this.gun.obj.is(v)) {
-        obj[f] = this.array2object(v)
-        return
+    Object.entries(arr).forEach(entrie => {
+      if (Array.isArray(entrie[1]) || typeof entrie[1] === 'object') {
+        obj[entrie[0]] = this.array2object(entrie[1]);
+      } else {
+        obj[entrie[0]] = entrie[1];
       }
-      if (isNaN(f)) obj[f] = v
-      else obj[f - 1] = v
     })
 
     if (obj[0]) {
@@ -181,5 +180,25 @@ export class NgxGundbRef {
     }
 
     return obj
+  }
+
+  object2array(value: any) {
+    if (typeof value === 'object') {
+      let obj: any = {};
+
+      Object.entries(value).forEach((entrie: [string, any]) => {
+        if (typeof entrie[1] === 'object' && entrie[1].hasOwnProperty('length')) {
+          delete entrie[1].length;
+          obj[entrie[0]] = Object.values(entrie[1]).map(item => this.object2array(item));
+        } else {
+          obj[entrie[0]] = entrie[1];
+        }
+      });
+
+      return obj;
+    }
+
+    return value;
+
   }
 }
