@@ -124,21 +124,43 @@ export class NgxGundbRef {
   }
 
   /**
-   * Returns a node from the Gun database
-   * @param key string
-   * @returns NgxGundbRef
+   * Verify for changes on the node in the Gun database
+   * @returns Observable<T>
    */
-   open(key: string): NgxGundbRef {
-    return NgxGundbRef.create(this.gun.open(key));
+   open<T>(): Observable<T> {
+    return new Observable((o) => {
+      let stopped = false;
+      this.gun.open((data: T, key: string, at: any, ev: any) => {
+        if (stopped) {
+          o.complete();
+          return ev.off();
+        }
+        o.next(this.object2array(this.extractData(data)));
+      });
+      return () => {
+        stopped = true;
+      };
+    });
   }
 
   /**
-   * Returns a node from the Gun database
-   * @param key string
-   * @returns NgxGundbRef
+   * Verify for changes on the node in the Gun database
+   * @returns Observable<T>
    */
-   load(key: string): NgxGundbRef {
-    return NgxGundbRef.create(this.gun.load(key));
+   load<T>(): Observable<T> {
+    return new Observable((o) => {
+      let stopped = false;
+      this.gun.load((data: T, key: string, at: any, ev: any) => {
+        if (stopped) {
+          o.complete();
+          return ev.off();
+        }
+        o.next(this.object2array(this.extractData(data)));
+      });
+      return () => {
+        stopped = true;
+      };
+    });
   }
 
   protected isEmpty(objectToCheck: Object): boolean {
