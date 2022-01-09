@@ -7,6 +7,7 @@ import { SEA } from "gun";
 import "gun/sea.js";
 import "gun/lib/load.js";
 import "gun/lib/open.js";
+import "gun/lib/unset.js";
 
 @Injectable()
 export class NgxGundbRef {
@@ -15,17 +16,14 @@ export class NgxGundbRef {
   constructor(
     @Inject("ngxGundbOptions") protected options: NgxGundbOptions = {}
   ) {
+    this.gun = Gun();
 
     if (!this.isEmpty(this.options)) {
-      this.gun = Gun(this.options.peers);
-
       if (this.options.SEA) {
         this.gun.SEA = SEA;
       }
 
       this.gun.opt(this.options);
-    } else {
-      this.gun = Gun();
     }
   }
 
@@ -75,6 +73,15 @@ export class NgxGundbRef {
    */
   set(data: string | Object): NgxGundbRef {
     return NgxGundbRef.create(this.gun.set(this.gun.put(data)));
+  }
+
+  /**
+   * Remove data from a set from the Gun database
+   * @param data NgxGundbRef
+   * @returns NgxGundbRef
+   */
+  unset(data: NgxGundbRef): NgxGundbRef {
+    return NgxGundbRef.create(this.gun.unset(data));
   }
 
   /**
