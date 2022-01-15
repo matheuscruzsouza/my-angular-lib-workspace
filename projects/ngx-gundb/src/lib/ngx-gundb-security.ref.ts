@@ -1,4 +1,5 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
+import { NgxGundbOptions } from "dist/ngx-gundb/public-api";
 import { Observable } from "rxjs";
 import { NgxGundbRef } from "./ngx-gundb.ref";
 
@@ -6,8 +7,15 @@ import { NgxGundbRef } from "./ngx-gundb.ref";
 export class NgxGundbSecurityRef extends NgxGundbRef {
   public security;
 
-  constructor() {
-    super();
+  constructor(
+    @Inject("ngxGundbOptions") protected options: NgxGundbOptions = {}
+  ) {
+    super(options);
+
+    if (!this.isEmpty(this.options)) {
+      this.gun.opt(this.options);
+    }
+
     this.security = this.gun.SEA;
   }
 

@@ -1,4 +1,5 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
+import { NgxGundbOptions } from "dist/ngx-gundb/public-api";
 import { Observable } from "rxjs";
 import { NgxGundbRef } from "./ngx-gundb.ref";
 
@@ -6,8 +7,11 @@ import { NgxGundbRef } from "./ngx-gundb.ref";
 export class NgxGundbUserRef extends NgxGundbRef {
   public user;
 
-  constructor() {
-    super();
+  constructor(
+    @Inject("ngxGundbOptions") protected options: NgxGundbOptions = {}
+  ) {
+    super(options);
+
     this.user = this.gun.user().recall({ sessionStorage: true });
   }
 

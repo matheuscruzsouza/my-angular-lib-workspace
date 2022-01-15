@@ -16,8 +16,8 @@ export class NgxGundbService {
     @Inject("ngxGundbOptions") @Optional() options?: NgxGundbOptions
   ) {
     this.db = new NgxGundbRef(options || {});
-    this.user = new NgxGundbUserRef();
-    this.security = new NgxGundbSecurityRef();
+    this.user = new NgxGundbUserRef(options || {});
+    this.security = new NgxGundbSecurityRef(options || {});
   }
 }
 
