@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@angular/core";
-import { NgxGundbOptions } from "dist/ngx-gundb/public-api";
+import { NgxGundbOptions } from "./ngx-gundb.options";
 import { Observable } from "rxjs";
 import { NgxGundbRef } from "./ngx-gundb.ref";
 
