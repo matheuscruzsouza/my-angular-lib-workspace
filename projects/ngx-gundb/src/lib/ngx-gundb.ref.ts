@@ -117,9 +117,9 @@ export class NgxGundbRef {
    * Return values on the node in the Gun database
    * @returns Observable<T>
    */
-   val<T>(): Observable<T> {
+  val<T>(): Observable<T> {
     return new Observable((o) => {
-      this.gun.val((data: any, key: string, at: any, ev: any) => {
+      this.gun.map().val((data: any, key: string, at: any, ev: any) => {
         o.next(this.extractData(data));
         o.complete();
       });
