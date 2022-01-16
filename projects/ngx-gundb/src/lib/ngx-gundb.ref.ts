@@ -196,7 +196,7 @@ export class NgxGundbRef {
   }
 
   array2object(arr: any) {
-    if (arr == null) {
+    if (arr == null || (typeof arr != 'object' && !Array.isArray(arr))) {
       return arr;
     }
 
