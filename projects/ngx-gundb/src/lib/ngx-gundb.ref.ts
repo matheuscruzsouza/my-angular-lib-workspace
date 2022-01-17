@@ -120,7 +120,7 @@ export class NgxGundbRef {
   val<T>(): Observable<T> {
     return new Observable((o) => {
       this.gun.once((data: any, key: string, at: any, ev: any) => {
-        o.next(this.extractData(data));
+        o.next(this.buildTree(this.extractData(data)));
         o.complete();
       }, {wait: 0});
     });
@@ -210,6 +210,27 @@ export class NgxGundbRef {
       data,
       (val: any, key: string) => val !== null && key !== "_"
     );
+  }
+
+  protected buildTree = (data: any) => {
+    if (!data) { return data; }
+
+    const cache: any = {};
+
+    Object.entries(data).forEach((entrie: [string, any]) => {
+      const [key, value] = entrie;
+
+      if (value['#']) {
+        this.gun.get(value).val().subscribe((_data: any) => cache[key] = this.buildTree(_data));
+      } else if (typeof value === 'object') {
+        cache[key] = this.buildTree(value);
+      } else {
+        cache[key] = value;
+      }
+
+    });
+
+    return cache;
   }
 
   array2object(arr: any) {
