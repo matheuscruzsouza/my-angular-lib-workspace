@@ -221,8 +221,7 @@ export class NgxGundbRef {
       const [key, value] = entrie;
 
       if (value['#']) {
-        this.get(value['#']).val().subscribe((_data: any) => console.log("value['#']: ", value['#'], _data));
-        this.get(value['#']).val().subscribe((_data: any) => cache[key] = _data);
+        this.gun.get(value['#']).once((_data: any) => cache[key] = _data, { wait: 0 });
       } else if (typeof value === 'object') {
         cache[key] = this.buildTree(value);
       } else {
