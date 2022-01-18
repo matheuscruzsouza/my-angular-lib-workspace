@@ -217,12 +217,11 @@ export class NgxGundbRef {
   buildTree = async (data: any) => {
     if (!data) { return data; }
 
-
     for (const key in data) {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
         let value = data[key];
 
-        if (value['#']) {
+        if (value && value['#']) {
           await this.gun.get(value['#']).once(async (_data: any) => value = await this.buildTree(_data), { wait: 0 });
         }
 
