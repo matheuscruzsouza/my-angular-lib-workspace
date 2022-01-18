@@ -221,7 +221,7 @@ export class NgxGundbRef {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
         let value = data[key];
 
-        if (value && value['#']) {
+        if (value && value['#'] && value['#'].indexOf('/') == -1) {
           await this.gun.get(value['#']).once(async (_data: any) => {
             console.log(value, _data);
 
