@@ -222,7 +222,11 @@ export class NgxGundbRef {
         let value = data[key];
 
         if (value && value['#']) {
-          await this.gun.get(value['#']).once(async (_data: any) => value = await this.buildTree(_data), { wait: 0 });
+          await this.gun.get(value['#']).once(async (_data: any) => {
+            console.log(value, _data);
+
+            value = await this.buildTree(_data)
+          }, { wait: 0 });
         }
 
         data[key] = value;
