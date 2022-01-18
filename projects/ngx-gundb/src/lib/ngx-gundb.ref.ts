@@ -220,7 +220,11 @@ export class NgxGundbRef {
     Object.entries(data).forEach((entrie: [string, any]) => {
       const [key, value] = entrie;
 
+      console.log("VALUE: ", value);
+
+
       if (value['#']) {
+        this.get(value['#']).val().subscribe((_data: any) => console.log("value['#']: ", _data));
         this.get(value['#']).val().subscribe((_data: any) => cache[key] = _data);
       } else if (typeof value === 'object') {
         cache[key] = this.buildTree(value);
