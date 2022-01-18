@@ -119,8 +119,8 @@ export class NgxGundbRef {
    */
   val<T>(): Observable<T> {
     return new Observable((o) => {
-      this.gun.once((data: any, key: string, at: any, ev: any) => {
-        o.next(this.extractData(data));
+      this.gun.once(async (data: any, key: string, at: any, ev: any) => {
+        o.next(await this.buildTree(this.extractData(data)));
         o.complete();
       }, {wait: 0});
     });
@@ -210,6 +210,25 @@ export class NgxGundbRef {
       data,
       (val: any, key: string) => val !== null && key !== "_"
     );
+  }
+
+  buildTree = async (data: any) => {
+    if (!data) { return data; }
+
+
+    for (const key in data) {
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        let value = data[key];
+
+        if (value['#']) {
+          value = await this.buildTree( await this.get(value['#']).val().toPromise() );
+        }
+
+        data[key] = value;
+      }
+    }
+
+    return data;
   }
 
   array2object(arr: any) {
