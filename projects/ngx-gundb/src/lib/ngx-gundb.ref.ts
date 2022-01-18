@@ -222,10 +222,9 @@ export class NgxGundbRef {
         let value = data[key];
 
         if (value && value['#'] && key.indexOf('/') == -1) {
-          await this.gun.get(value['#']).once(async (_data: any) => {
-            console.log(value, _data);
-
+          Gun().get(value['#']).once(async (_data: any) => {
             value = await this.buildTree(_data)
+            console.log(value, _data);
           }, { wait: 0 });
         }
 
