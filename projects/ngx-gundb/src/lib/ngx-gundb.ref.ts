@@ -119,8 +119,8 @@ export class NgxGundbRef {
    */
   val<T>(): Observable<T> {
     return new Observable((o) => {
-      this.gun.once((data: any, key: string, at: any, ev: any) => {
-        o.next(this.buildTree(this.extractData(data)));
+      this.gun.once(async (data: any, key: string, at: any, ev: any) => {
+        o.next(await this.buildTree(this.extractData(data)));
         o.complete();
       }, {wait: 0});
     });
@@ -212,25 +212,20 @@ export class NgxGundbRef {
     );
   }
 
-  protected buildTree = (data: any) => {
+  protected buildTree = async (data: any) => {
     if (!data) { return data; }
 
     const cache: any = {};
 
-    Object.entries(data).forEach((entrie: [string, any]) => {
+    Object.entries(data).forEach(async (entrie: [string, any]) => {
       const [key, value] = entrie;
 
       if (value['#']) {
         console.time("access " + value['#']);
-        this.gun.get(value['#']).once(async (_data: any) => {
-          cache[key] = this.buildTree(_data);
-          console.log(cache, key, _data);
-          console.timeEnd("access " + value['#']);
-        }, {wait: 0});
-        console.log(data, value['#'], cache[key]);
+        await this.gun.get(value['#']).once(async (_data: any) => cache[key] = this.buildTree(_data), {wait: 0});
+        console.log(data, key, value['#'], cache[key]);
       } else if (typeof value === 'object') {
-        cache[key] = this.buildTree(value);
-        console.log(data, value, cache[key]);
+        cache[key] = await this.buildTree(value);
       } else {
         cache[key] = value;
       }
