@@ -221,7 +221,7 @@ export class NgxGundbRef {
         let value = data[key];
 
         if (value['#']) {
-          this.get(value['#']).val().subscribe(_data => value = this.buildTree(_data));
+          this.gun.get(value['#']).once((_data: any) => value = this.buildTree(_data), { wait: 0 });
         }
 
         data[key] = value;
