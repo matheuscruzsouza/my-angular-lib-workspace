@@ -221,7 +221,12 @@ export class NgxGundbRef {
       const [key, value] = entrie;
 
       if (value['#']) {
-        this.gun.get(value['#']).once((_data: any) => cache[key] = this.buildTree(_data), {wait: 5});
+        console.time("access");
+        this.gun.get(value['#']).once((_data: any) => {
+          cache[key] = this.buildTree(_data);
+          console.log(cache, key, _data);
+          console.timeEnd("access");
+        }, {wait: 0});
         console.log(data, value['#'], cache[key]);
       } else if (typeof value === 'object') {
         cache[key] = this.buildTree(value);
