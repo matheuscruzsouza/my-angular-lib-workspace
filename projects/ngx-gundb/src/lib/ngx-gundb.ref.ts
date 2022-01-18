@@ -213,8 +213,6 @@ export class NgxGundbRef {
   }
 
   protected buildTree = (data: any) => {
-    console.log(data);
-
     if (!data) { return data; }
 
     const cache: any = {};
@@ -223,9 +221,11 @@ export class NgxGundbRef {
       const [key, value] = entrie;
 
       if (value['#']) {
-        NgxGundbRef.create(this.gun.get(value['#'])).val().subscribe((_data: any) => cache[key] = _data);
+        this.get(value['#']).val().subscribe((_data: any) => cache[key] = _data);
+        console.log(data, value['#'], cache[key]);
       } else if (typeof value === 'object') {
         cache[key] = this.buildTree(value);
+        console.log(data, value, cache[key]);
       } else {
         cache[key] = value;
       }
