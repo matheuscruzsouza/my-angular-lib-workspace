@@ -213,6 +213,8 @@ export class NgxGundbRef {
   }
 
   protected buildTree = (data: any) => {
+    console.log(data);
+
     if (!data) { return data; }
 
     const cache: any = {};
