@@ -117,10 +117,10 @@ export class NgxGundbRef {
    * Return values on the node in the Gun database
    * @returns Observable<T>
    */
-  val<T>(): Observable<T> {
+  val<T>(depth = 99): Observable<T> {
     return new Observable((o) => {
       this.gun.once((data: any, key: string, at: any, ev: any) => {
-        this.buildTree(this.extractData(data)).then(response => {
+        this.buildTree(this.extractData(data), depth).then(response => {
           o.next(response);
           o.complete();
         });
@@ -214,18 +214,18 @@ export class NgxGundbRef {
     );
   }
 
-  buildTree = async (data: any) => {
+  buildTree = async (data: any, depth = 99) => {
     if (!data) { return data; }
 
     const getValue = (path: string) => new Promise((resolve) =>
       Gun()
       .get(path)
       .once(
-        (_data: any) => resolve(this.buildTree(_data)), { wait: 0 })
+        (_data: any) => resolve( depth > 0 ? this.buildTree(_data, depth-1) : _data['_']), { wait: 0 })
     );
 
     for (const key in data) {
-      if (Object.prototype.hasOwnProperty.call(data, key)) {
+      if (Object.prototype.hasOwnProperty.call(data, key) && key.indexOf('/') == -1 && key != "_") {
         let value = data[key];
 
         if (value && value['#'] && key.indexOf('/') == -1) {
