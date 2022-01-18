@@ -218,8 +218,11 @@ export class NgxGundbRef {
     if (!data) { return data; }
 
     const getValue = (path: string) => new Promise((resolve) =>
-      Gun().get(path).once(async (_data: any) => resolve(await this.buildTree(_data)
-    ), { wait: 0 }));
+      Gun()
+      .get(path)
+      .once(
+        (_data: any) => resolve(this.buildTree(_data)), { wait: 0 })
+    );
 
     for (const key in data) {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
