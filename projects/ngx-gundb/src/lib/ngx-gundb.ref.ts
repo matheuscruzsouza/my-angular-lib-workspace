@@ -115,17 +115,37 @@ export class NgxGundbRef {
 
   /**
    * Return values on the node in the Gun database
+   * @param depth Number
    * @returns Observable<T>
    */
-  val<T>(depth = 99): Observable<T> {
-    return new Observable((o) => {
-      this.gun.once((data: any, key: string, at: any, ev: any) => {
-        this.buildTree(this.extractData(data), depth).then(response => {
-          o.next(response);
-          o.complete();
+  val<T>(depth = 99, once = false): Observable<T> {
+    if (once) {
+      return new Observable((o) => {
+        this.gun.once((data: any, key: string, at: any, ev: any) => {
+          this.buildTree(this.extractData(data), depth).then(response => {
+            o.next(response);
+            o.complete();
+          });
+        }, {wait: 0});
+      });
+    } else {
+      return new Observable((o) => {
+        let stopped = false;
+        this.gun.on((data: T, key: string, at: any, ev: any) => {
+          this.buildTree(this.extractData(data), depth).then(response => {
+            if (stopped) {
+              o.complete();
+              return ev.off();
+            }
+            o.next(this.extractData(response));
+          });
         });
-      }, {wait: 0});
-    });
+        return () => {
+          stopped = true;
+        };
+      });
+    }
+
   }
 
   /**
