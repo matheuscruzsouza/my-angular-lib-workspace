@@ -1,8 +1,8 @@
 # MyWorkspace
 
-[![Publish package ngx-gundb to Github Package Registry](https://github.com/matheuscruzsouza/my-angular-lib-workspace/actions/workflows/ngx-gundb.yaml/badge.svg?branch=main)](https://github.com/matheuscruzsouza/my-angular-lib-workspace/actions/workflows/ngx-gundb.yaml)
+[![Package ngx-gundb on Github Package Registry](https://github.com/matheuscruzsouza/my-angular-lib-workspace/actions/workflows/ngx-gundb.yaml/badge.svg?branch=main)](https://github.com/matheuscruzsouza/my-angular-lib-workspace/actions/workflows/ngx-gundb.yaml)
 
-[![Publish package ngx-text-editor to Github Package Registry](https://github.com/matheuscruzsouza/my-angular-lib-workspace/actions/workflows/ngx-text-editor.yaml/badge.svg?branch=main)](https://github.com/matheuscruzsouza/my-angular-lib-workspace/actions/workflows/ngx-text-editor.yaml)
+[![Package ngx-text-editor on Github Package Registry](https://github.com/matheuscruzsouza/my-angular-lib-workspace/actions/workflows/ngx-text-editor.yaml/badge.svg?branch=main)](https://github.com/matheuscruzsouza/my-angular-lib-workspace/actions/workflows/ngx-text-editor.yaml)
 
 This project is a workspace to build angular libraries, as explained in this [article](https://angular.io/guide/creating-libraries)
 
