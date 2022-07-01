@@ -62,14 +62,14 @@ export class NgxGundbSecurityRef extends NgxGundbRef {
   }
 
   async verify(data: any, pair: any): Promise<boolean> {
-    return await this.security.verify(data, pair);
+    return this.security.verify(data, pair);
   }
 
   async encrypt(data: any, pair: any): Promise<any> {
-    return await this.security.encrypt(data, pair);
+    return this.security.encrypt(data, pair);
   }
 
   async decrypt(data: any, pair: any): Promise<any> {
-    return await this.security.decrypt(data, pair);
+    return this.security.decrypt(data, pair);
   }
 }
