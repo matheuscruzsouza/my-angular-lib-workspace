@@ -23,40 +23,32 @@ import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR
 export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewInit {
 
   editable = true;
-
   selectedColor = "#000";
-
+  selectedFont = "Arial";
+  selectedSize = 3;
   value: any;
-
   disabled = false;
-
   touched = false;
 
   private iframe: HTMLIFrameElement| undefined;
   private content: Document | undefined;
 
   fonts = [
-    'Arial',
-    'Times New Roman',
-    'Sans serif',
-    'Courier New',
-    'Verdana',
-    'Roboto',
-    'Cookie',
-    'Lora'
+    {font: 'Arial', url: null},
+    {font: 'Times New Roman', url: null},
+    {font: 'Sans serif', url: null},
+    {font: 'Courier New', url: null},
+    {font: 'Verdana', url: null},
+    {font: 'Roboto', url: 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap'},
+    {font: 'Cookie', url: 'https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap'},
+    {font: 'Lora', url: 'https://fonts.googleapis.com/css2?family=Cookie&display=swap'},
   ];
-
-  private fontLinks = [
-    'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
-    'https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap',
-    'https://fonts.googleapis.com/css2?family=Cookie&display=swap',
-  ]
 
   @Output() keyup = new EventEmitter();
 
   constructor(private elementRef: ElementRef) { }
 
-  onChange = (value: any) => {};
+  onChange = (_value: any) => {};
 
   onTouched = () => {};
 
@@ -86,7 +78,7 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
     this.disabled = disabled;
   }
 
-  validate(control: AbstractControl): ValidationErrors | null {
+  validate(_control: AbstractControl): ValidationErrors | null {
     return null;
   }
 
@@ -131,6 +123,7 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
     }
 
     this.content.execCommand('fontName', false, event.target.value);
+    this.selectedFont = event.target.value;
 
     this.onChange(this.content.body.innerHTML);
     this.keyup.emit(this.content.body.innerHTML);
@@ -174,13 +167,13 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
   }
 
   private setFonts() {
-    this.fontLinks.forEach((url: string) => {
-      if (this.content) {
+    this.fonts.forEach((font: any) => {
+      if (this.content && font.url) {
         const head = this.content.head;
 
         const link = this.content.createElement("link");
         link.rel = "stylesheet";
-        link.href = url;
+        link.href = font.url;
 
         head.appendChild(link);
       }
