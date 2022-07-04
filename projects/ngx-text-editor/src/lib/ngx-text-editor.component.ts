@@ -44,6 +44,12 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
     'Roboto',
     'Cookie',
     'Lora'
+  ];
+
+  private fontLinks = [
+    'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
+    'https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap',
+    'https://fonts.googleapis.com/css2?family=Cookie&display=swap',
   ]
 
   @Output() keyup = new EventEmitter();
@@ -58,7 +64,7 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
     if (!this.content) {
       return;
     }
-    
+
     const textBody = this.content.querySelector('body');
 
     if (!textBody) {
@@ -96,7 +102,7 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
     this.content = this.iframe.contentDocument || this.iframe.contentWindow?.document;
 
     if (!this.content) { return ; }
-    
+
     this.content.designMode = 'on';
 
     this.setEventListener();
@@ -150,7 +156,7 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
       }
 
       const imgRaw = "<img src='" + e.target.result + "' />";
-    
+
       this.content.execCommand('insertHTML', false, imgRaw);
 
       this.onChange(this.content.body.innerHTML);
@@ -161,26 +167,22 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
       images.forEach((image: HTMLImageElement) => {
         image.style.width = '100%';
       });
-      
+
     }
 
     reader.readAsDataURL(event.target.files[0]);
   }
 
   private setFonts() {
-    this.elementRef.nativeElement.querySelectorAll("link")
-    .forEach((htmlElement: HTMLLinkElement) => {
+    this.fontLinks.forEach((url: string) => {
       if (this.content) {
         const head = this.content.head;
-        const hasStyle = Array.from(head.querySelectorAll("link")).filter(
-          (node: HTMLLinkElement) => node.href == htmlElement.href
-        ).length;
 
-        if (!hasStyle) {
-          head.appendChild(
-            htmlElement.cloneNode(true)
-          );
-        }
+        const link = this.content.createElement("link");
+        link.rel = "stylesheet";
+        link.href = url;
+
+        head.appendChild(link);
       }
     });
   }
@@ -198,54 +200,54 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
           if (button.name === 'active') {
             button.classList.toggle('active');
           }
-  
+
           if (['createLink'].includes(cmd)) {
             let url = prompt('Insira o link aqui', '')  || '';
-            
+
             if (!this.content) {
               return ;
             }
-  
+
             this.content.execCommand(cmd, false, url);
 
             this.onChange(this.content.body.innerHTML);
             this.keyup.emit(this.content.body.innerHTML);
-  
+
             const links = this.content.querySelectorAll('a') || [];
-  
+
             links.forEach((link: HTMLAnchorElement) => {
               link.target = '_blank';
-  
+
               link.addEventListener('mouseover', () => {
                 if (!this.content) {
                   return ;
                 }
-  
+
                 this.content.designMode = 'off';
               });
               link.addEventListener('mouseout', () => {
                 if (!this.content) {
                   return ;
                 }
-  
+
                 this.content.designMode = 'on';
               });
             });
-  
+
           } else {
             if (!this.content) {
               return ;
             }
-  
+
             this.content.execCommand(cmd, false, undefined);
 
             this.onChange(this.content.body.innerHTML);
             this.keyup.emit(this.content.body.innerHTML);
           }
-  
+
           if (cmd === 'showCode') {
             const textBody = this.content.querySelector('body');
-  
+
             if (textBody) {
               if (show) {
                 textBody.innerHTML = textBody.textContent || '';
