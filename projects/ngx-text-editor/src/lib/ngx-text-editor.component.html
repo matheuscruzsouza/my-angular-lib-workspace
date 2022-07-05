@@ -17,13 +17,13 @@
         <input type="color" (change)="chooseColor($event)" [value]="selectedColor"/>
     </div>
     <div class="button-holder">
-        <button type="button"><i class='bx bx-font-size'></i> {{selectedSize}}</button>
+        <button type="button"><i class='bx bx-font-size'></i></button>
         <select (change)="changeSize($event)">
             <option *ngFor="let item of [].constructor(8); let i = index" [value]="i + 1" >{{i + 1}}</option>
         </select>
     </div>
     <div class="button-holder">
-        <button type="button"><i class='bx bx-font'></i> {{selectedFont}} </button>
+        <button type="button"><i class='bx bx-font'></i></button>
         <select (change)="changeFont($event)">
             <option *ngFor="let font of fonts" [value]="font.font" [style.font-family]="font.font">{{font.font}}</option>
         </select>

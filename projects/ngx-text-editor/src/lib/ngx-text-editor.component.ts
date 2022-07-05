@@ -29,6 +29,7 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
   value: any;
   disabled = false;
   touched = false;
+  showingCode = false;
 
   private iframe: HTMLIFrameElement| undefined;
   private content: Document | undefined;
@@ -183,8 +184,6 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
   private setButtonActions() {
     const buttons = document.querySelectorAll('button');
 
-    let show = false;
-
     buttons.forEach(button => {
       button.addEventListener('click', () => {
         let cmd = button.getAttribute('data-cmd') || '';
@@ -194,62 +193,20 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
             button.classList.toggle('active');
           }
 
-          if (['createLink'].includes(cmd)) {
-            let url = prompt('Insira o link aqui', '')  || '';
+          console.log(cmd);
 
-            if (!this.content) {
-              return ;
-            }
+          switch (cmd) {
+            case 'createLink':
+              this.createLink(cmd);
+              break;
 
-            this.content.execCommand(cmd, false, url);
+            case 'showCode':
+              this.showCode();
+              break;
 
-            this.onChange(this.content.body.innerHTML);
-            this.keyup.emit(this.content.body.innerHTML);
-
-            const links = this.content.querySelectorAll('a') || [];
-
-            links.forEach((link: HTMLAnchorElement) => {
-              link.target = '_blank';
-
-              link.addEventListener('mouseover', () => {
-                if (!this.content) {
-                  return ;
-                }
-
-                this.content.designMode = 'off';
-              });
-              link.addEventListener('mouseout', () => {
-                if (!this.content) {
-                  return ;
-                }
-
-                this.content.designMode = 'on';
-              });
-            });
-
-          } else {
-            if (!this.content) {
-              return ;
-            }
-
-            this.content.execCommand(cmd, false, undefined);
-
-            this.onChange(this.content.body.innerHTML);
-            this.keyup.emit(this.content.body.innerHTML);
-          }
-
-          if (cmd === 'showCode') {
-            const textBody = this.content.querySelector('body');
-
-            if (textBody) {
-              if (show) {
-                textBody.innerHTML = textBody.textContent || '';
-                show = false;
-              } else {
-                textBody.textContent = textBody.innerHTML;
-                show = true;
-              }
-            }
+            default:
+              this.executeCommand(cmd);
+              break;
           }
         }
       });
@@ -265,5 +222,77 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
       this.onChange(this.content.body.innerHTML);
       this.keyup.emit(this.content.body.innerHTML);
     });
+  }
+
+  private executeCommand(cmd: string) {
+    if (!this.content) {
+      return ;
+    }
+
+    this.content.execCommand(cmd, false, undefined);
+
+    this.onChange(this.content.body.innerHTML);
+    this.keyup.emit(this.content.body.innerHTML);
+  }
+
+  private boldCommand() {
+    const strongElement = document.createElement("strong");
+    const userSelection = window.getSelection();
+    if (userSelection) {
+      const selectedTextRange = userSelection.getRangeAt(0);
+      selectedTextRange.surroundContents(strongElement);
+    }
+  }
+
+  private createLink(cmd: string) {
+    let url = prompt('Insira o link aqui', '')  || '';
+
+    if (!this.content) {
+      return ;
+    }
+
+    this.content.execCommand(cmd, false, url);
+
+    this.onChange(this.content.body.innerHTML);
+    this.keyup.emit(this.content.body.innerHTML);
+
+    const links = this.content.querySelectorAll('a') || [];
+
+    links.forEach((link: HTMLAnchorElement) => {
+      link.target = '_blank';
+
+      link.addEventListener('mouseover', () => {
+        if (!this.content) {
+          return ;
+        }
+
+        this.content.designMode = 'off';
+      });
+      link.addEventListener('mouseout', () => {
+        if (!this.content) {
+          return ;
+        }
+
+        this.content.designMode = 'on';
+      });
+    });
+  }
+
+  private showCode() {
+    if (!this.content) {
+      return ;
+    }
+
+    const textBody = this.content.querySelector('body');
+
+    if (textBody) {
+      console.log(textBody.textContent, textBody.innerHTML);
+      if (this.showingCode) {
+        textBody.innerHTML = textBody.textContent || '';
+      } else {
+        textBody.textContent = textBody.innerHTML;
+      }
+      this.showingCode = !this.showingCode;
+    }
   }
 }
