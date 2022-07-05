@@ -45,6 +45,24 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
     {font: 'Lora', url: 'https://fonts.googleapis.com/css2?family=Cookie&display=swap'},
   ];
 
+  actions: any = {
+    justifyLeft: {element: 'div', style: 'text-align: left;'},
+    justifyCenter: {element: 'div', style: 'text-align: center;'},
+    justifyRight: {element: 'div', style: 'text-align: right;'},
+    justifyFull: {element: 'div', style: 'text-align: justify;'},
+    bold: {element: 'strong'},
+    italic: {element: 'em'},
+    underline: {element: 'u'},
+    strikethrough: {element: 's'},
+    insertOrderedList: {elements: ['ol', 'li']},
+    insertUnorderedList: {elements: ['ul', 'li']},
+    undo: null,
+    redo: null,
+    mark: {element: 'mark'},
+    sub: {element: 'sub'},
+    sup: {element: 'sup'}
+  }
+
   @Output() keyup = new EventEmitter();
 
   constructor(private elementRef: ElementRef) { }
@@ -193,8 +211,6 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
             button.classList.toggle('active');
           }
 
-          console.log(cmd);
-
           switch (cmd) {
             case 'createLink':
               this.createLink(cmd);
@@ -205,7 +221,7 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
               break;
 
             default:
-              this.executeCommand(cmd);
+              this.execCommand(cmd);
               break;
           }
         }
@@ -235,12 +251,24 @@ export class NgxTextEditorComponent implements ControlValueAccessor, AfterViewIn
     this.keyup.emit(this.content.body.innerHTML);
   }
 
-  private boldCommand() {
-    const strongElement = document.createElement("strong");
+  private execCommand(cmd: string) {
+    const command = this.actions[cmd];
+
+    if (!this.content || !command) {
+      return ;
+    }
+
+    const element = this.content.createElement(command.element);
+
+    if (command.style) {
+      element.style = command.style;
+    }
+
     const userSelection = window.getSelection();
+
     if (userSelection) {
       const selectedTextRange = userSelection.getRangeAt(0);
-      selectedTextRange.surroundContents(strongElement);
+      selectedTextRange.surroundContents(element);
     }
   }
 
